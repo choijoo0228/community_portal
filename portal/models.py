@@ -8,6 +8,9 @@ class Event(models.Model):
     description = models.TextField(blank=True, max_length=2000)
     start_datetime = models.DateTimeField()
     location = models.CharField(max_length=120)
+    
+    image = models.ImageField(upload_to="events/", blank=True, null=True)
+    
     is_published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -31,6 +34,9 @@ class Resource(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     url = models.URLField()
     description = models.TextField(blank=True, max_length=2000)
+    
+    image = models.ImageField(upload_to="resources/", blank=True, null=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

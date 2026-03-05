@@ -16,6 +16,9 @@
               <strong>Time:</strong> {{ event.start_datetime|time:"H:i" }}<br>
               <strong>Location:</strong> {{ event.location }}
             </p>
+            {% if event.image %}
+              <img src="{{ event.image.url }}" class="card-img-top">
+            {% endif %}
             {% if event.description %}
               <p class="card-text text-muted">
                 {{ event.description|truncatechars:120 }}
