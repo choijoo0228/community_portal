@@ -1,0 +1,23 @@
+{% extends "portal/base.html" %}
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'events_list' %}" class="btn btn-link">&larr; Back to Events</a>
+
+<h2 class="mt-2">{{ event.title }}</h2>
+
+<p class="mb-1"><strong>Date:</strong> {{ event.start_datetime|date:"D, d M Y" }}</p>
+<p class="mb-1"><strong>Time:</strong> {{ event.start_datetime|time:"H:i" }}</p>
+<p class="mb-3"><strong>Location:</strong> {{ event.location }}</p>
+
+{% if event.description %}
+  <div class="card">
+    <div class="card-body">
+      <p class="mb-0">{{ event.description|linebreaks }}</p>
+    </div>
+  </div>
+{% else %}
+  <p class="text-muted">No description provided.</p>
+{% endif %}
+
+{% endblock %}
