@@ -52,6 +52,7 @@ class EventSuggestion(models.Model):
     description = models.TextField(blank=True, max_length=2000)
     start_datetime = models.DateTimeField()
     location = models.CharField(max_length=120)
+    image = models.ImageField(upload_to="event_suggestions/", blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="PENDING")
     submitted_at = models.DateTimeField(auto_now_add=True)
 

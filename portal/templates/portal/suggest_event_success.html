@@ -1,0 +1,12 @@
+{% extends "portal/base.html" %}
+{% block title %}Suggestion Sent{% endblock %}
+
+{% block content %}
+<div class="alert alert-success">
+  <h4 class="alert-heading">Thank you!</h4>
+  <p>Your event suggestion has been submitted and is pending admin review.</p>
+  <hr>
+  <a class="btn btn-primary" href="{% url 'events_list' %}">View Events</a>
+  <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back Home</a>
+</div>
+{% endblock %}

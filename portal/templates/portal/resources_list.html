@@ -1,0 +1,69 @@
+{% extends "portal/base.html" %}
+{% block title %}Resources{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Community Resources</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-5">
+        <input
+            type="text"
+            name="q"
+            class="form-control"
+            placeholder="Search resources..."
+            value="{{ query }}"
+        >
+    </div>
+
+    <div class="col-md-4">
+        <select name="category" class="form-select">
+            <option value="">All Categories</option>
+            {% for value, label in categories %}
+                <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+</form>
+
+{% if resources %}
+    <div class="row g-4">
+        {% for resource in resources %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    {% if resource.image %}
+                        <img src="{{ resource.image.url }}" class="card-img-top" alt="{{ resource.title }}">
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ resource.title }}</h5>
+                        <p>
+                            <span class="badge bg-secondary">{{ resource.get_category_display }}</span>
+                        </p>
+
+                        {% if resource.description %}
+                            <p class="card-text text-muted">
+                                {{ resource.description|truncatechars:140 }}
+                            </p>
+                        {% endif %}
+
+                        <a href="{{ resource.url }}" target="_blank" class="btn btn-outline-primary">
+                            Visit Resource
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        No resources found.
+    </div>
+{% endif %}
+
+{% endblock %}

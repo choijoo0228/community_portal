@@ -1,9 +1,11 @@
 from time import timezone
 
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
+from .forms import EventSuggestionForm
 
-from .models import Event
+from .models import Event, Resource, EventSuggestion
 
 # Create your views here.
 
@@ -24,7 +26,42 @@ def event_detail(request, event_id):
     return render(request, "portal/event_detail.html", {"event": event})
 
 def resources_list(request):
-    return HttpResponse("Resources page")
+    resources = Resource.objects.all().order_by("-created_at")
+
+    query = request.GET.get("q", "")
+    category = request.GET.get("category", "")
+
+    if query:
+        resources = resources.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+
+    if category:
+        resources = resources.filter(category=category)
+
+    categories = Resource.CATEGORY_CHOICES
+
+    context = {
+        "resources": resources,
+        "query": query,
+        "selected_category": category,
+        "categories": categories,
+    }
+    return render(request, "portal/resources_list.html", context)
 
 def suggest_event(request):
-    return HttpResponse("Suggest Event page")
+    if request.method == "POST":
+        form = EventSuggestionForm(request.POST, request.FILES)
+        if form.is_valid():
+            suggestion = form.save(commit=False)
+            suggestion.status = "PENDING"
+            suggestion.save()
+            return redirect("suggest_event_success")
+    else:
+        form = EventSuggestionForm()
+
+    return render(request, "portal/suggest_event.html", {"form": form})
+
+
+def suggest_event_success(request):
+    return render(request, "portal/suggest_event_success.html")
