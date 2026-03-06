@@ -22,8 +22,8 @@ from portal import views as portal_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", portal_views.home, name="home"),
     path("", include("portal.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 if settings.DEBUG:

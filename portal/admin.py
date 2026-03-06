@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Event, Resource, EventSuggestion
+from .models import Event, Profile, Resource, EventSuggestion
 
 # Register your models here.
 admin.site.site_header = "Community Portal Admin"
 admin.site.register(Event)
 admin.site.register(Resource)
+admin.site.register(Profile)
 
 @admin.action(description="Approve selected suggestions (create Events)")
 def approve_suggestions(modeladmin, request, queryset):

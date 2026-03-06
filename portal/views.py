@@ -3,10 +3,12 @@ from time import timezone
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from .forms import EventSuggestionForm
+from .forms import EventSuggestionForm, RegisterForm
+from django.contrib.auth.decorators import login_required
 
 from .models import Event, Resource, EventSuggestion
-
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User 
 # Create your views here.
 
 def home(request):
@@ -49,11 +51,13 @@ def resources_list(request):
     }
     return render(request, "portal/resources_list.html", context)
 
+@login_required
 def suggest_event(request):
     if request.method == "POST":
         form = EventSuggestionForm(request.POST, request.FILES)
         if form.is_valid():
             suggestion = form.save(commit=False)
+            suggestion.user = request.user
             suggestion.status = "PENDING"
             suggestion.save()
             return redirect("suggest_event_success")
@@ -65,3 +69,20 @@ def suggest_event(request):
 
 def suggest_event_success(request):
     return render(request, "portal/suggest_event_success.html")
+
+def register(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("home")
+    else:
+        form = RegisterForm()
+
+    return render(request, "portal/register.html", {"form": form})
+
+@login_required
+def user_section(request):
+    profile = getattr(request.user, "profile", None)
+    return render(request, "portal/user_section.html", {"profile": profile})

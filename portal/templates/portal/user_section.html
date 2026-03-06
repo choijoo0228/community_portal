@@ -1,0 +1,22 @@
+{% extends "portal/base.html" %}
+{% block title %}User Section{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">User Section</h2>
+
+<div class="card p-4">
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    {% if profile %}
+        <p><strong>Phone Number:</strong> {{ profile.phone_number }}</p>
+    {% endif %}
+
+    {% if user.is_staff %}
+        <p><strong>Role:</strong> Admin/Staff</p>
+        <a href="/admin/" class="btn btn-primary">Go to Admin Panel</a>
+    {% else %}
+        <p><strong>Role:</strong> Registered User</p>
+    {% endif %}
+</div>
+{% endblock %}
