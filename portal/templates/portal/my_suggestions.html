@@ -1,0 +1,50 @@
+{% extends "portal/base.html" %}
+{% block title %}My Suggestions{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">My Event Suggestions</h2>
+
+{% if suggestions %}
+    <div class="row g-3">
+        {% for suggestion in suggestions %}
+            <div class="col-md-6">
+                <div class="card h-100">
+                    {% if suggestion.image %}
+                        <img src="{{ suggestion.image.url }}" class="card-img-top" alt="{{ suggestion.title }}">
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ suggestion.title }}</h5>
+
+                        <p class="card-text">
+                            <strong>Date:</strong> {{ suggestion.start_datetime|date:"D, d M Y" }}<br>
+                            <strong>Time:</strong> {{ suggestion.start_datetime|time:"H:i" }}<br>
+                            <strong>Location:</strong> {{ suggestion.location }}<br>
+                            <strong>Submitted:</strong> {{ suggestion.submitted_at|date:"d M Y H:i" }}
+                        </p>
+
+                        {% if suggestion.description %}
+                            <p class="text-muted">
+                                {{ suggestion.description|truncatechars:140 }}
+                            </p>
+                        {% endif %}
+
+                        {% if suggestion.status == "PENDING" %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% elif suggestion.status == "APPROVED" %}
+                            <span class="badge bg-success">Approved</span>
+                        {% elif suggestion.status == "REJECTED" %}
+                            <span class="badge bg-danger">Rejected</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        You have not submitted any event suggestions yet.
+    </div>
+{% endif %}
+
+{% endblock %}

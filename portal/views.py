@@ -86,3 +86,8 @@ def register(request):
 def user_section(request):
     profile = getattr(request.user, "profile", None)
     return render(request, "portal/user_section.html", {"profile": profile})
+
+@login_required
+def my_suggestions(request):
+    suggestions = EventSuggestion.objects.filter(user=request.user).order_by("-submitted_at")
+    return render(request, "portal/my_suggestions.html", {"suggestions": suggestions})

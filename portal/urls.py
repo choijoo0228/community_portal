@@ -10,4 +10,5 @@ urlpatterns = [
     path("register/", views.register, name="register"),
     path("", views.home, name="home"),
     path("user-section/", views.user_section, name="user_section"),
+    path("my-suggestions/", views.my_suggestions, name="my_suggestions"),
 ]
