@@ -29,4 +29,5 @@ def reject_suggestions(modeladmin, request, queryset):
 class EventSuggestionAdmin(admin.ModelAdmin):
     list_display = ("title", "start_datetime", "location", "status", "submitted_at")
     list_filter = ("status",)
-    actions = ["title", "user__username"]
+    search_fields = ["title", "user__username"]
+    actions = [approve_suggestions, reject_suggestions]

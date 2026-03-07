@@ -9,15 +9,32 @@ from django.contrib.auth.decorators import login_required
 from .models import Event, Resource, EventSuggestion
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User 
+from django.utils import timezone
 # Create your views here.
 
 def home(request):
-    return render(request, "portal/home.html")
+    upcoming_events = (
+        Event.objects
+        .filter(is_published=True, start_datetime__gte=timezone.now())
+        .order_by("start_datetime")[:3]
+    )
+    
+    latest_resources = Resource.objects.order_by("-created_at")[:3]
+    
+    print("Upcoming events count:", upcoming_events.count())
+    print("Resources count:", latest_resources.count())
+    
+    context = {
+        "upcoming_events": upcoming_events,
+        "latest_resources": latest_resources,
+    }
+    
+    return render(request, "portal/home.html", context)
 
 def events_list(request):
     events = (
         Event.objects
-        .filter(is_published=True)
+        .filter(is_published=True, start_datetime__gte=timezone.now())
         .order_by("start_datetime")
     )
     return render(request, "portal/events_list.html", {"events": events})

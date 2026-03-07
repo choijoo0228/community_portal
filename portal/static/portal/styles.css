@@ -1,0 +1,92 @@
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+a:hover .card {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.card-img-top {
+    max-height: 450px;
+    object-fit: contain;
+    background: #f5f5f5;
+}
+
+.resource-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.resource-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* event cards */
+
+.event-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.event-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.event-image-wrapper {
+    position: relative;
+}
+
+.event-card-image {
+    height: 220px;
+    object-fit: cover;
+}
+
+.event-date-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    background: white;
+    border-radius: 8px;
+
+    padding: 6px 10px;
+
+    text-align: center;
+    line-height: 1.1;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.event-month {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #dc3545;
+}
+
+.event-day {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.event-placeholder {
+    height: 220px;
+    background: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #666;
+}
