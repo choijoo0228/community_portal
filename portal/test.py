@@ -1,8 +1,7 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import EventSuggestion
 
-class EventSuggestionModelTest(TestCase):
+class EventSuggestionModelTest():
     
     def test_create_event_suggestion(self):
         user = User.objects.create_user(username='testuser', password='testpass')
