@@ -1,5 +1,3 @@
-from time import timezone
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .forms import EventSuggestionForm, RegisterForm
@@ -7,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Event, Resource, EventSuggestion
 from django.contrib.auth import login
+from django.utils import timezone
 # Create your views here.
 
 def home(request):
