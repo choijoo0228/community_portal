@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Bandit security scan
         run: |
-          bandit -r . -x ./venv,./portal/migrations,./community_portal/migrations,./portal/tests.py
+          bandit -r . -x ./venv,./portal/migrations,./community_portal/migrations,./portal/test.py
 
       - name: Run dependency vulnerability scan
         run: |
