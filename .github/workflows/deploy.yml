@@ -11,6 +11,11 @@ jobs:
   test-and-scan:
     runs-on: ubuntu-latest
 
+    env:
+      SECRET_KEY: test-secret-key
+      DEBUG: "False"
+      ALLOWED_HOSTS: "127.0.0.1,localhost"
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -35,9 +40,6 @@ jobs:
           ruff check .
 
       - name: Run Django tests
-        env:
-          SECRET_KEY: test-secret-key
-          DEBUG: "False"
         run: |
           python manage.py test
 
