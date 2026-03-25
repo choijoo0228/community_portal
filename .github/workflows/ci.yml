@@ -1,0 +1,55 @@
+name: Django CI
+
+on:
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  test-and-scan:
+    runs-on: ubuntu-latest
+
+    env:
+      SECRET_KEY: test-secret-key
+      DEBUG: "False"
+      ALLOWED_HOSTS: "127.0.0.1,localhost"
+      DB_NAME: ""
+      AWS_STORAGE_BUCKET_NAME: ""
+      AWS_S3_REGION_NAME: "us-east-1"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff bandit pip-audit
+
+      - name: Show Python version
+        run: python --version
+
+      - name: Run lint
+        run: |
+          ruff check .
+
+      - name: Run Django tests
+        run: |
+          python manage.py test
+
+      - name: Run Bandit security scan
+        run: |
+          bandit -r . -x ./venv,./portal/migrations,./community_portal/migrations,./portal/test.py
+
+      - name: Run dependency vulnerability scan
+        run: |
+          pip-audit -r requirements.txt

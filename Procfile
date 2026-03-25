@@ -1,1 +1,0 @@
-web: gunicorn community_portal.wsgi:application
