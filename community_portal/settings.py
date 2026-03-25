@@ -78,8 +78,6 @@ WSGI_APPLICATION = 'community_portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import os
-
 if os.environ.get("DB_NAME"):
     DATABASES = {
         "default": {
