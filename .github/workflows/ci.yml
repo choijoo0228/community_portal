@@ -15,7 +15,6 @@ jobs:
       SECRET_KEY: test-secret-key
       DEBUG: "False"
       ALLOWED_HOSTS: "127.0.0.1,localhost"
-      DB_NAME: ""
       AWS_STORAGE_BUCKET_NAME: ""
       AWS_S3_REGION_NAME: "us-east-1"
 
@@ -35,21 +34,14 @@ jobs:
           pip install -r requirements.txt
           pip install ruff bandit pip-audit
 
-      - name: Show Python version
-        run: python --version
-
       - name: Run lint
-        run: |
-          ruff check .
+        run: ruff check .
 
-      - name: Run Django tests
-        run: |
-          python manage.py test
+      - name: Run tests
+        run: python manage.py test
 
-      - name: Run Bandit security scan
-        run: |
-          bandit -r . -x ./venv,./portal/migrations,./community_portal/migrations,./portal/test.py
+      - name: Run Bandit
+        run: bandit -r . -x ./venv,./portal/migrations,./community_portal/migrations,./portal/tests.py
 
-      - name: Run dependency vulnerability scan
-        run: |
-          pip-audit -r requirements.txt
+      - name: Run pip-audit
+        run: pip-audit -r requirements.txt
