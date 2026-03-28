@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .forms import EventSuggestionForm, RegisterForm
@@ -7,6 +8,8 @@ from .models import Event, Resource, EventSuggestion
 from django.contrib.auth import login
 from django.utils import timezone
 # Create your views here.
+logger = logging.getLogger(__name__)
+
 
 def home(request):
     upcoming_events = (
@@ -66,18 +69,22 @@ def resources_list(request):
 
 @login_required
 def suggest_event(request):
-    if request.method == "POST":
-        form = EventSuggestionForm(request.POST, request.FILES)
-        if form.is_valid():
-            suggestion = form.save(commit=False)
-            suggestion.user = request.user
-            suggestion.status = "PENDING"
-            suggestion.save()
-            return redirect("suggest_event_success")
-    else:
-        form = EventSuggestionForm()
+    try:
+        if request.method == "POST":
+            form = EventSuggestionForm(request.POST, request.FILES)
+            if form.is_valid():
+                suggestion = form.save(commit=False)
+                suggestion.user = request.user
+                suggestion.status = "PENDING"
+                suggestion.save()
+                return redirect("suggest_event_success")
+        else:
+            form = EventSuggestionForm()
 
-    return render(request, "portal/suggest_event.html", {"form": form})
+        return render(request, "portal/suggest_event.html", {"form": form})
+    except Exception as e:
+        logger.error("Error in suggest_event view: %s", str(e))
+        return render(request, "portal/suggest_event.html", {"form": form, "error": "An error occurred while submitting your suggestion. Please try again."})
 
 
 def suggest_event_success(request):

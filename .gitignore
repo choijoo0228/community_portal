@@ -6,7 +6,12 @@ db.sqlite3
 media/
 staticfiles/
 .DS_Store
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+
+# SSH keys
+*.pem
+github_ec2_key
+github_ec2_key*
+*.key
+*.pub
+
+.ssh/
