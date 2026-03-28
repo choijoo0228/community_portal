@@ -2,21 +2,50 @@
 {% block title %}User Section{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">User Section</h2>
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <h2 class="mb-4">User Profile</h2>
 
-<div class="card p-4">
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
+        <!-- Profile Card -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="mb-4">
+                    <label class="text-muted small mb-1 d-block">Username</label>
+                    <p class="mb-0 fw-semibold">{{ user.username }}</p>
+                </div>
 
-    {% if profile %}
-        <p><strong>Phone Number:</strong> {{ profile.phone_number }}</p>
-    {% endif %}
+                <div class="mb-4">
+                    <label class="text-muted small mb-1 d-block">Email</label>
+                    <p class="mb-0"><a href="mailto:{{ user.email }}" class="text-decoration-none">{{ user.email }}</a></p>
+                </div>
 
-    {% if user.is_staff %}
-        <p><strong>Role:</strong> Admin/Staff</p>
-        <a href="/admin/" class="btn btn-primary">Go to Admin Panel</a>
-    {% else %}
-        <p><strong>Role:</strong> Registered User</p>
-    {% endif %}
+                {% if profile.phone_number %}
+                <div class="mb-4">
+                    <label class="text-muted small mb-1 d-block">Phone Number</label>
+                    <p class="mb-0"><a href="tel:{{ profile.phone_number }}" class="text-decoration-none">{{ profile.phone_number }}</a></p>
+                </div>
+                {% endif %}
+
+                <div class="mb-4">
+                    <label class="text-muted small mb-1 d-block">Member Since</label>
+                    <p class="mb-0">{{ user.date_joined|date:"M d, Y" }}</p>
+                </div>
+
+                {% if user.is_staff %}
+                <div class="mb-4">
+                    <label class="text-muted small mb-1 d-block">Role</label>
+                    <p class="mb-0"><span class="badge bg-primary">Admin</span></p>
+                </div>
+                {% endif %}
+
+                <div class="pt-3 border-top">
+                    {% if user.is_staff %}
+                        <a href="/admin/" class="btn btn-outline-primary">Admin Panel</a>
+                    {% endif %}
+                    <a href="/accounts/logout/" class="btn btn-outline-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

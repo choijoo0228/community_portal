@@ -90,3 +90,39 @@ a:hover .card {
     font-weight: 600;
     color: #666;
 }
+
+/* User Section Styles */
+
+.card a {
+    color: #667eea;
+    transition: color 0.2s ease;
+}
+
+.card a:hover {
+    color: #764ba2;
+}
+
+/* Form Styles */
+
+.form-control-lg {
+    border: 2px solid #e9ecef;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+.form-control-lg:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+}
+
+.form-control {
+    border: 2px solid #e9ecef;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+}
