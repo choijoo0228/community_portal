@@ -181,35 +181,6 @@ GitHub Actions is used for continuous integration and deployment.
 - HTTPS enforced (recommended)
 - Static code analysis tools integrated in CI/CD
 
-## Troubleshooting & Lessons Learned
-
-1. S3 Upload access denied
-    - Error: AccessDenied (PutObject)
-    - Cause: IAM restriction in AWS Learner Lab
-    - Resolution:
-        - Identified permission issue
-        - Adjusted S3 policy
-        - Implemented fallback for optional image upload
-
-2. Static files not loading
-    - Cause: Incorrect static configuration in production
-    - Fix:
-        - Configured STATIC_ROOT
-        - Used collectstatic
-        - Served via Nginx
-
-3. CI/CD SSH Deployment Failure
-    - Cause: Incorrect SSH key configuration
-    - Fix:
-        - Generated new deploy key
-        - Configured GitHub Secrets
-        - Updated workflow
-
-4. GitHub Authentication Failure on EC2
-    - Cause: Using HTTPS without credentials
-    - Fix:
-        - Switched to SSH deploy key for GitHub
-
 ## Testing
 
 - Manual testing of all user flows
