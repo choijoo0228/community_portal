@@ -41,7 +41,7 @@ jobs:
         run: python manage.py test
 
       - name: Run Bandit
-        run: bandit -r . -x ./venv,./portal/migrations,./community_portal/migrations,./portal/test.py
+        run: bandit -r . -x ./venv,./portal/migrations,./community_portal/migrations,./portal/tests.py
 
       - name: Run pip-audit
         run: pip-audit -r requirements.txt

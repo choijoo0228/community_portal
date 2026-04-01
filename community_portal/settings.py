@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-fww8j8gk^#f3@kruyhb*0
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
 
 # Application definition
 
